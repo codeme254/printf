@@ -1,1 +1,187 @@
-will create this man page soon
+.TH printf 3 "2022-08-10" "0x11. C - printf" 
+
+.SH NAME 
+.B C - printf: The printf() is a library function to send formatted output to the screen. 
+
+.SH SYNOPSIS
+.B #include \fB"main.h"
+
+.B int _printf(const char *format, ...);
+
+.SH DESCRIPTION
+.B A Group project to implement our own printf function. 
+.in +2n
+The function \fB_printf()\fR writes output to \fBstdout\fR (i.e. the standard
+output which points to the terminal). This function writes under the control of a 
+\fBformat\fR parameter passed to the _printf() function that points to a string 
+and returns/outputs the variable-length.
+.in
+.B The Return value
+.in +2n
+Upon successful return, \fB_printf()\fR returns the number of characters
+printed excluding the null byte character that is used to end output 
+to a strings.
+\fB Note:\fR If by any means an output error is encountered, -1 is returned.
+.in
+.B The format string
+.in +2n
+This is a constant character string. The format string is composed of zero or 
+more directives: ordinary characters which are copied unchanged to
+the output stream; and conversion specifications, each of which results in
+fetching zero or more subsequent arguments. Conversion specification is
+introduced by the character \fB%\fR and ends with a \fBConversion/Format specifier\fR.
+
+\fBConversion/Format specifier\fR
+.in +2n
+Conversion/Format specifiers define the type of data to be printed on standard output. 
+Format specifiers is used whether you're printing formatted output. 
+Some of the conversion specifiers include:
+.in +2n
+\fBd, i\fR - The int argument is converted to signed decimal notation.
+.in
+
+.in +2n
+\fBs\fR - The const char * argument is expected to be a pointer to a character
+array. Characters from the array are written starting
+from the first element of the array and ending at, but not including, the
+terminating null byte ('\\0').
+.in
+
+.in +2n
+\fBb\fR - The unsigned intargument is converted to binary.
+.in
+
+
+.in +2n
+\fBS\fR - Identical to the \fBS\fR conversion specifier, except any non-printable
+characters in the array (ie. characters with an ASCII value < 32 or >= 127)
+are written as \fB\\x\fR followed by the ASCII code value in hexadecimal
+(upper case, two characters).
+.in
+
+.in +2n
+\fBo, u, x, X\fR - The unsigned int argument is converted to unsigned octal (\fBo\fR),
+unsigned decimal (\fBu\fR), or unsigned hexadecimal (\fBx\fR and \fBX\fR)
+notation. The letters \fBabcdef\fR are used for \fBx\fR conversions; the
+letters \fBABCDEF\fR are used for \fBX\fR conversions.
+.in
+
+
+.in +2n
+\fBc\fR - The int argument is converted to an unsigned char, and the
+resulting character is written.
+.in
+
+
+.in +2n
+\fBr\fR - Identical to the \fBs\fR conversion specifier, except characters from the
+array are written in reverse, starting from the terminating null byte ('\\0') 
+and ending at the first element of the array.
+.in
+
+.in +2n
+\fBR\fR - Identical to the \fBs\fR conversion specifier, except each character of the
+array is converted to its corresponding character in ROT13 before breing written.
+.in
+
+.in +2n
+\fBp\fR - The address of the argument is written. The address is written in hexadecimal
+with a leading \fI0x\fR.
+.in
+
+.in +2n
+\fB%\fR - A '%' is written. No argument is converted. The complete conversion
+specification is '%%'.
+.in
+
+.B EXAMPLE
+
+.RS
+#include "main.h"
+
+/**
+ * _printf - main function.
+ * @format:A list of types of arguments passed to the function.
+ * @...: The parameters to print.
+ *
+ * Description: This function prints everything.
+ *
+ * Return: The total number of characters printed.
+ */
+
+int _printf(const char *format, ...)
+{
+	va_list x;
+	
+	int i = 0, count = 0;
+
+	va_start(x, format);
+
+	if (!format || format[i] == '\n' || format[i] == '\0' ||
+	
+	   (format[i] == '%' && !format[i + 1]))
+	   
+	{
+	
+		return (-1);
+		
+	}
+
+	while (format && format[i])
+	
+	{
+	
+		if (format[i] == '%')
+		
+		{
+		
+			count += selector(&i, format, x);
+
+		}
+		
+		else
+		
+		{
+		
+			_putchar(format[i]);
+			
+			count++;
+			
+		}
+		
+		i++;
+		
+	}
+	
+	va_end(x);
+	
+	return (count);
+}
+.RE
+
+.SH SEE ALSO
+
+printf(3)
+
+The \fB_printf()\fR function emulates functionality of the C standard library
+function \fBprintf()\fR. This man page borrows from the corresponding Linux
+man page printf(3).
+
+.SH AUTHORS
+
+.in +2n 
+.B OGUEJI CHISOM CALEB
+.in
+.in +2n
+.B DENNIS OTWOMA
+.in
+
+
+
+
+
+
+
+
+
+
